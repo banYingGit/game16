@@ -1,0 +1,67 @@
+{
+  "irid": 1,
+  "userid": 1,
+  "iid": 1,
+  "addtime": 1506315809,
+  "content": "第一个回复",
+  "support": 1,
+  "visible": 1,
+  "tier": 1,
+  "itype": 1,
+  "nickname": "1nick",
+  "userheadpath": "1head",
+  "host": 1,
+  "childCount": 4,
+  "loginSupport": 1,
+  "replyAccessoryList": [
+    {
+      "iraid": 1,
+      "irid": 1,
+      "irapath": "1jpg"
+    },
+    {
+      "iraid": 2,
+      "irid": 1,
+      "irapath": "2jpg"
+    },
+    {
+      "iraid": 3,
+      "irid": 1,
+      "irapath": "3jpg"
+    }
+  ],
+  "childReplyList": [
+    {
+      "irid": 3,
+      "userid": 3,
+      "nickname": "33nick",
+      "userheadpath": "3head",
+      "iid": 1,
+      "addtime": 1506320000,
+      "content": "回复第一个回复1",
+      "parentid": 1,
+      "support": 1,
+      "visible": 1,
+      "tier": 1,
+      "replyuserid": 1,
+      "replynickname": "1nick",
+      "showreplyuser": 0
+    },
+    {
+      "irid": 8,
+      "userid": 6,
+      "nickname": "66nick",
+      "userheadpath": "6head",
+      "iid": 1,
+      "addtime": 1506329909,
+      "content": "回复第一个回复1de",
+      "parentid": 1,
+      "support": null,
+      "visible": 1,
+      "tier": 4,
+      "replyuserid": 3,
+      "replynickname": "33nick",
+      "showreplyuser": 1
+    }
+  ]
+}

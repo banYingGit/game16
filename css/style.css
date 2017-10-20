@@ -175,7 +175,7 @@ img {
 
 .part1 {
     position: absolute;
-    top: 22%;
+    top: 15%;
     left: 15%;
     background: url("../img/block_di_1.png") no-repeat;
     background-size: 100% 100%;
@@ -216,7 +216,7 @@ img {
 
 .part2 {
     position: absolute;
-    top: 14%;
+    top: 11%;
     left: 12.5%;
     background: url("../img/block_di_2.png") no-repeat;
     background-size: 100% 100%;
@@ -232,7 +232,7 @@ img {
 
 .part3 {
     position: absolute;
-    top: 5%;
+    top: 5.5%;
     left: 10%;
     background: url("../img/block_di_3.png") no-repeat;
     background-size: 100% 100%;

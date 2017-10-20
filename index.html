@@ -37,20 +37,11 @@
     <img src="img/tip1.png" class="tip"/>
     <img src="img/text5.png" class="note"/>
     <div class="part-box">
-        <ul class="part3">
+        <ul id="partList">
             <li><img src="img/num/num3.png"/></li>
-            <li><img src="img/num/num1.png"/></li>
-            <li><img src="img/num/num2.png"/></li>
-            <li><img src="img/num/num3.png"/></li>
-            <li><img src="img/num/num1.png"/></li>
-            <li><img src="img/num/num2.png"/></li>
-            <li><img src="img/num/num3.png"/></li>
-            <li><img src="img/num/num1.png"/></li>
-            <li><img src="img/num/num2.png"/></li>
         </ul>
-        <div class="num-show">
-            <img src="img/nums/num1.png"/><img src="img/nums/num2.png"/><img src="img/nums/num3.png"/>
-            <img src="img/nums/num3.png"/> <img src="img/nums/num3.png"/>
+        <div class="num-show" id="partLine">
+
         </div>
     </div>
     <div class="botton">
@@ -100,9 +91,8 @@
 
     $('.time-box span').css({'font-size': screenH / 18})
 
-    $('.part1').css({'width': screenH * 0.4, 'height': screenH * 0.4, 'padding': screenH * 0.01 + 'px'})
-    $('.part2').css({'width': screenH * 0.4, 'height': screenH * 0.4, 'padding': screenH * 0.01 + 'px'})
-    $('.part3').css({'width': screenH * 0.5, 'height': screenH * 0.5, 'padding': screenH * 0.01 + 'px'})
+    $('.part-box ul').css({'padding': screenH * 0.01 + 'px'});
+
 </script>
 </body>
 </html>
