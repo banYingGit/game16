@@ -74,6 +74,7 @@ function _chooseArr(i) {
 
     var $arr = [];
 
+
     if (i == 1) {
         $arr = _getArrayItems(level1, 1).concat([isOne])
     } else if (i == 2) {
@@ -86,6 +87,26 @@ function _chooseArr(i) {
     }
     console.log('>>>>>', $arr)
     return $arr
+
+}
+
+function _setHide(i) {
+
+    var aArr = [1, 2, 3], bArr = [1, 2, 3, 4], cArr = [1, 2, 3, 4, 5]
+
+    if (i == 1) {
+
+    } else if (i == 2) {
+
+
+    } else if (i == 3) {
+
+
+    }
+    else if (i == 4) {
+
+
+    }
 
 }
 
