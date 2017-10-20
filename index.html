@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关联记忆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-touch-fullscreen" content="yes"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta name="msapplication-tap-highlight" content="no"/>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
+    <title>配对记忆测验</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="javascript/jquery-2.1.3.js"></script>
+
+
+</head>
+<body>
+<div class="srceen" id="screen1">
+    <div class="main-box">
+        <div class="img-box explain"><img src="img/text1.png"/></div>
+        <div class="botton"><img src="img/btn1.png" id="goscreen2"/></div>
+    </div>
+</div>
+<div class="srceen" id="screen2">
+    <div class="main-box main-box-2">
+        <div class="img-box explain"><img src="img/text2.png"/></div>
+        <div class="botton"><img src="img/btn2.png" id="goscreen3"/></div>
+    </div>
+</div>
+<div class="srceen" id="screen3" style="display: block">
+    <div class="time-box"><span id="timeScr3">105</span>秒</div>
+    <div class="stop"><img src="img/stop.png"/></div>
+    <img src="img/tip1.png" class="tip"/>
+    <img src="img/text5.png" class="note"/>
+    <div class="part-box">
+        <ul class="part3">
+            <li><img src="img/num/num3.png"/></li>
+            <li><img src="img/num/num1.png"/></li>
+            <li><img src="img/num/num2.png"/></li>
+            <li><img src="img/num/num3.png"/></li>
+            <li><img src="img/num/num1.png"/></li>
+            <li><img src="img/num/num2.png"/></li>
+            <li><img src="img/num/num3.png"/></li>
+            <li><img src="img/num/num1.png"/></li>
+            <li><img src="img/num/num2.png"/></li>
+        </ul>
+        <div class="num-show">
+            <img src="img/nums/num1.png"/><img src="img/nums/num2.png"/><img src="img/nums/num3.png"/>
+            <img src="img/nums/num3.png"/> <img src="img/nums/num3.png"/>
+        </div>
+    </div>
+    <div class="botton">
+        <img src="img/btn5.png"/>
+    </div>
+</div>
+
+<div class="srceen" id="screen4">
+    <div class="main-box main-box-2">
+        <div class="img-box explain explainT"><img src="img/text3.png"/></div>
+        <div class="botton"><img src="img/btn3.png"/></div>
+    </div>
+</div>
+
+<div class="srceen" id="stopBox">
+    <div class="main-box">
+        <div class="img-box explain"><img src="img/text4.png"/></div>
+        <div class="botton bottons">
+            <img src="img/btn6.png" data-role="out"/>
+            <img src="img/btn4.png" id="continue"/>
+        </div>
+    </div>
+</div>
+
+<div class="srceen" id="over">
+    <div class="main-box main-box-2">
+        <div class="img-box explain explainT"><img src="img/over.png"/>
+            <div id="score" class="resultOver"></div>
+        </div>
+        <div class="botton"><img src="img/btn6.png" data-role="out" onclick="history.go(-1)"/></div>
+    </div>
+</div>
+<script src="javascript/gameView.js"></script>
+
+<script>
+    var screenH = $(document).height()
+
+    $('.tip').css({'width': screenH * 0.25, 'top': screenH * 0.25, 'left': screenH * 0.03})
+    $('.time-box').css({
+        'top': screenH * 0.06,
+        'left': screenH * 0.06,
+        'width': screenH * 0.17,
+        'height': screenH * 0.17 + 'px',
+        'line-height': screenH * 0.16 + 'px',
+        'font-size': screenH / 24
+    });
+
+    $('.time-box span').css({'font-size': screenH / 18})
+
+    $('.part1').css({'width': screenH * 0.4, 'height': screenH * 0.4, 'padding': screenH * 0.01 + 'px'})
+    $('.part2').css({'width': screenH * 0.4, 'height': screenH * 0.4, 'padding': screenH * 0.01 + 'px'})
+    $('.part3').css({'width': screenH * 0.5, 'height': screenH * 0.5, 'padding': screenH * 0.01 + 'px'})
+</script>
+</body>
+</html>
