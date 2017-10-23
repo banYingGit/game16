@@ -253,14 +253,13 @@ img {
     height: 20%;
 }
 
+
 /* 最后结果 */
 .resultOver {
     position: absolute;
-    right: 35%;
+    right: 30%;
     width: 40%;
-    bottom: -3%;
+    top: 52%;
     text-align: right;
-    font-size: 5rem;
-    color: #067577;
 }
 

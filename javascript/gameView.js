@@ -2,7 +2,7 @@
  * Created by banYing on 2017/10/20 0020.
  */
 
-var level = 1, levelNum = 0, clickSum = 3, clickCur = 0, islevelFourOne = true, isPractice = true,
+var level = 1, levelNum = 0, clickSum = 3, clickCur = 0, islevelFourOne = true, isPractice = true, sumTime = 0,
     level1 = [
         [1, 2, 3, 3, 1, 2, 2, 3, 1],
         [3, 2, 1, 2, 1, 3, 1, 3, 2],
@@ -101,7 +101,6 @@ function _setPart() {
 
     clearInterval(autoTime);
 
-    $('#tip').hide()
 
     $('#partSure img').attr({'src': 'img/btn5.png', 'onclick': ''})
 
@@ -136,6 +135,13 @@ function _setPart() {
     }
 
     var $time = isPractice ? 300 : 600;
+
+    if (levelNum != 3) {
+
+        sumTime = sumTime + ($time - $('#timeBox').text())
+
+    }
+    console.log('刚刚用时', levelNum, sumTime, '>>>>>', $time - $('#timeBox').text())
 
     _time($time, function () {
 
@@ -286,7 +292,8 @@ function _checkLeft(e, val) {
 function _goTest() {
     $('#screen3').hide()
     $('#screen4').show()
-
+    sumTime = sumTime + (300 - $('#timeBox').text())
+    console.log('---------------', sumTime)
     $('#start').on('click', function () {
         level = 2
         clickSum = 4
@@ -358,9 +365,10 @@ function _setHide(x, y) {
 //游戏结束
 function _over() {
 
+    sumTime = sumTime + (600 - $('#timeBox').text())
     $('#screen3').hide()
     $('#over').show()
-    // $('#score').text(correctNum * 100)
+    $('#score').text(sumTime)
 
     /* ajax 请求接口路径，返回json 数据
      * timeObj: 游戏时间json
@@ -369,9 +377,7 @@ function _over() {
 
     var param = {
 
-        // timeObj: timeObj,
-        //
-        // score: correctNum * 100
+        sumTime: sumTime,
 
     }
 
@@ -409,22 +415,25 @@ function _time(i, fn) {
 
         }
         if (isPractice) {
-            if (i <= 120) {
+            if (i <= 120 && i > 70) {
                 $('#tip').show()
+            } else {
+                $('#tip').hide()
             }
         } else {
 
-            if (i <= 300) {
+            if (i <= 300 && i > 250) {
 
                 $('#tip').attr('src', 'img/tip2.png').show()
-
+            } else {
+                $('#tip').hide()
             }
         }
 
 
     }
 
-    autoTime = setInterval(timeFn, 1000);
+    autoTime = setInterval(timeFn, 50);
 
 }
 
