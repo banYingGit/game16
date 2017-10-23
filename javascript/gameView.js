@@ -79,6 +79,9 @@ function _even() {
             } else {
                 _setPart()
             }
+            if (levelNum == 8) {
+                _over()
+            }
 
 
         })
@@ -136,12 +139,14 @@ function _setPart() {
 
     var $time = isPractice ? 300 : 600;
 
-    if (levelNum != 3) {
+    if (levelNum >= 4) {
 
-        sumTime = sumTime + ($time - $('#timeBox').text())
+        var _timeVal = (600 - $('#timeBox').text()) > 600 ? 600 : 600 - $('#timeBox').text()
+
+        sumTime = sumTime + _timeVal
 
     }
-    console.log('刚刚用时', levelNum, sumTime, '>>>>>', $time - $('#timeBox').text())
+    console.log('刚刚用时', levelNum, sumTime)
 
     _time($time, function () {
 
@@ -154,10 +159,15 @@ function _setPart() {
             clickSum = 10
         }
 
-        if (levelNum == 2) {
-            _goTest()
+        if (levelNum == 8) {
+            _over()
         } else {
-            _setPart()
+
+            if (levelNum == 2) {
+                _goTest()
+            } else {
+                _setPart()
+            }
         }
 
 
@@ -176,6 +186,20 @@ function _setPart() {
 
 function _getRight(e, val) {
     rightVal = val
+
+    $('#partLine').empty()
+    for (var n = 1; n <= level + 2; n++) {
+        if (val == n) {
+            $('#partLine').append('<img src="img/num/num' + n + '.png" onclick="_getRight(event,' + n + ')"  data-role="' + n + '">')
+        } else {
+
+            $('#partLine').append('<img src="img/nums/num' + n + '.png" onclick="_getRight(event,' + n + ')"  data-role="' + n + '">')
+        }
+
+
+    }
+
+
 }
 
 function _checkLeft(e, val) {
@@ -203,9 +227,7 @@ function _checkLeft(e, val) {
 
             if ($imgSrc.indexOf("block") != -1) {
 
-                console.log('>>>>')
-
-                clickCur = clickCur - 1
+                clickCur = clickCur - 1 < 0 ? 0 : clickCur - 1
 
                 $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
 
@@ -217,6 +239,11 @@ function _checkLeft(e, val) {
     }
 
     $(e.target).parent('li').css({'pointer-events': "none"})
+
+    $(e.target).attr('src', 'img/nums/num' + rightVal + '.png')
+
+    console.log('rightVal', rightVal)
+
     if (rightVal == val) {
 
         if (isPractice) {
@@ -225,14 +252,11 @@ function _checkLeft(e, val) {
 
         console.log('答对了')
 
-        $imgSrc = !!$(e.target).attr('src') ? $(e.target).attr('src') : $(e.target).children('img').attr('src')
+        // $imgSrc = !!$(e.target).attr('src') ? $(e.target).attr('src') : $(e.target).children('img').attr('src')
 
-        if ($imgSrc.indexOf("block") != -1) {
+        clickCur = clickCur + 1 > 3 ? 3 : clickCur + 1;
 
-            clickCur = clickCur + 1;
-
-            $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
-        }
+        $('#partSure img').attr({'src': 'img/btn5.png'})
 
 
     } else {
@@ -254,8 +278,15 @@ function _checkLeft(e, val) {
     setTimeout(function () {
         $(e.target).parent('li').css({'pointer-events': ""})
     }, 750)
-    $(e.target).attr('src', 'img/nums/num' + rightVal + '.png')
+
     rightVal = ''
+    $('#partLine').empty()
+    for (var n = 1; n <= level + 2; n++) {
+
+        $('#partLine').append('<img src="img/nums/num' + n + '.png" onclick="_getRight(event,' + n + ')"  data-role="' + n + '">')
+
+    }
+
     console.log('clickCur,clickSum', clickCur, clickSum)
     if (clickCur == clickSum) {
         setTimeout(function () {
@@ -292,8 +323,7 @@ function _checkLeft(e, val) {
 function _goTest() {
     $('#screen3').hide()
     $('#screen4').show()
-    sumTime = sumTime + (300 - $('#timeBox').text())
-    console.log('---------------', sumTime)
+
     $('#start').on('click', function () {
         level = 2
         clickSum = 4
@@ -364,8 +394,8 @@ function _setHide(x, y) {
 
 //游戏结束
 function _over() {
-
-    sumTime = sumTime + (600 - $('#timeBox').text())
+    var _timeVal = (600 - $('#timeBox').text()) > 600 ? 600 : 600 - $('#timeBox').text()
+    sumTime = sumTime + _timeVal
     $('#screen3').hide()
     $('#over').show()
     $('#score').text(sumTime)
@@ -433,7 +463,7 @@ function _time(i, fn) {
 
     }
 
-    autoTime = setInterval(timeFn, 50);
+    autoTime = setInterval(timeFn, 1000);
 
 }
 
