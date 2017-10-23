@@ -19,7 +19,7 @@
 
 </head>
 <body>
-<div class="srceen" id="screen1"  style="display: block">
+<div class="srceen" id="screen1" style="display: block">
     <div class="main-box">
         <div class="img-box explain"><img src="img/text1.png"/></div>
         <div class="botton"><img src="img/btn1.png" id="goscreen2"/></div>
@@ -32,9 +32,9 @@
     </div>
 </div>
 <div class="srceen" id="screen3">
-    <div class="time-box"><span id="timeScr3">105</span>秒</div>
+    <div class="time-box"><span id="timeBox">300</span>秒</div>
     <div class="stop" id="stop"><img src="img/stop.png"/></div>
-    <img src="img/tip1.png" class="tip"/>
+    <img src="img/tip1.png" class="tip" id="tip"/>
     <img src="img/text5.png" class="note"/>
     <div class="part-box">
         <ul id="partList">
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="botton" id="partSure">
-        <img src="img/btn5.png" />
+        <img src="img/btn5.png"/>
     </div>
 </div>
 
@@ -89,7 +89,7 @@
         'font-size': screenH / 24
     });
 
-    $('.time-box span').css({'font-size': screenH / 18})
+    $('.time-box span').css({'font-size': screenH / 18});
 
     $('.part-box ul').css({'padding': screenH * 0.01 + 'px'});
 

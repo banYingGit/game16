@@ -2,7 +2,7 @@
  * Created by banYing on 2017/10/20 0020.
  */
 
-var level = 1, levelNum = 0, clickSum = 3, clickCur = 0, islevelFourOne = true,
+var level = 1, levelNum = 0, clickSum = 3, clickCur = 0, islevelFourOne = true, isPractice = true,
     level1 = [
         [1, 2, 3, 3, 1, 2, 2, 3, 1],
         [3, 2, 1, 2, 1, 3, 1, 3, 2],
@@ -52,14 +52,37 @@ function _even() {
     $('#stop').on('click', function () {
 
         $('#stopBox').show()
-        $('#partList').hide()
-        $('#screen3').hide()
+
+        $('#screen3').hide();
+        clearInterval(autoTime)
     })
     $('#continue').on('click', function () {
 
         $('#stopBox').hide()
-        $('#partList').show()
         $('#screen3').show()
+
+        var $time = $('#timeBox').text()
+
+        _time($time, function () {
+
+            if (levelNum == 4) {
+                islevelFourOne = false;
+                clickSum = 8
+            }
+            if (levelNum == 6) {
+                level = 3
+                clickSum = 10
+            }
+
+            if (levelNum == 2) {
+                _goTest()
+            } else {
+                _setPart()
+            }
+
+
+        })
+
     })
 
     $('[data-role="out"]').click(function () {
@@ -73,7 +96,13 @@ function _even() {
 function _setPart() {
 
     clickCur = 0;
+
     levelNum = levelNum + 1
+
+    clearInterval(autoTime);
+
+    $('#tip').hide()
+
     $('#partSure img').attr({'src': 'img/btn5.png', 'onclick': ''})
 
     $('#partList , #partLine').empty()
@@ -106,6 +135,27 @@ function _setPart() {
 
     }
 
+    var $time = isPractice ? 300 : 600;
+
+    _time($time, function () {
+
+        if (levelNum == 4) {
+            islevelFourOne = false;
+            clickSum = 8
+        }
+        if (levelNum == 6) {
+            level = 3
+            clickSum = 10
+        }
+
+        if (levelNum == 2) {
+            _goTest()
+        } else {
+            _setPart()
+        }
+
+
+    })
 
     var screenH = $(document).height();
 
@@ -125,41 +175,79 @@ function _getRight(e, val) {
 function _checkLeft(e, val) {
 
     if (!rightVal) {
-        $(e.target).children('img').attr('src', 'img/block.png')
-        $(e.target).removeClass('result1')
-        var $imgSrc = $(e.target).children('img').attr('src')
-        if (!!$imgSrc) {
-            if ($imgSrc.indexOf("block") != -1) {
-                clickCur = clickCur - 1
-                $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
-            }
-        }
-        console.log('clickCur', clickCur)
-        return
-    } else {
 
+        var $imgSrc;
+
+        if (isPractice) {
+            $(e.target).children('img').attr('src', 'img/block.png')
+
+            $(e.target).removeClass('result1');
+
+            $imgSrc = $(e.target).children('img').attr('src')
+        } else {
+            $(e.target).attr('src', 'img/block.png')
+
+            $(e.target).parent('li').removeClass('result1')
+
+            $imgSrc = $(e.target).attr('src')
+
+        }
+
+        if (!!$imgSrc) {
+
+            if ($imgSrc.indexOf("block") != -1) {
+
+                console.log('>>>>')
+
+                clickCur = clickCur - 1
+
+                $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
+
+            }
+
+        }
+
+        return
     }
 
-
+    $(e.target).parent('li').css({'pointer-events': "none"})
     if (rightVal == val) {
-        $(e.target).parent('li').addClass('result1')
-        // console.log('答对了')
+
+        if (isPractice) {
+            $(e.target).parent('li').addClass('result1')
+        }
+
+        console.log('答对了')
+
         $imgSrc = !!$(e.target).attr('src') ? $(e.target).attr('src') : $(e.target).children('img').attr('src')
+
         if ($imgSrc.indexOf("block") != -1) {
 
-            clickCur = clickCur + 1
+            clickCur = clickCur + 1;
+
             $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
         }
 
 
     } else {
-        // console.log('答错了')
-        $(e.target).parent('li').addClass('result2')
-        setTimeout(function () {
-            $(e.target).parent('li').removeClass('result2')
-            $(e.target).attr('src', 'img/block.png')
-        }, 750)
+
+
+        if (isPractice) {
+            $(e.target).parent('li').addClass('result2')
+            setTimeout(function () {
+                $(e.target).parent('li').removeClass('result2').css({'pointer-events': ""})
+                $(e.target).attr('src', 'img/block.png')
+            }, 750)
+        } else {
+            clickCur = clickCur + 1;
+        }
+
+
+        console.log('答错了')
     }
+    setTimeout(function () {
+        $(e.target).parent('li').css({'pointer-events': ""})
+    }, 750)
     $(e.target).attr('src', 'img/nums/num' + rightVal + '.png')
     rightVal = ''
     console.log('clickCur,clickSum', clickCur, clickSum)
@@ -191,10 +279,10 @@ function _checkLeft(e, val) {
                 $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_over()'})
             }
 
-        }, 750)
+        }, 0)
     }
 }
-
+// 去正式题
 function _goTest() {
     $('#screen3').hide()
     $('#screen4').show()
@@ -202,6 +290,7 @@ function _goTest() {
     $('#start').on('click', function () {
         level = 2
         clickSum = 4
+        isPractice = false
         _setPart()
         $('#screen3').show()
         $('#screen4').hide()
@@ -228,7 +317,6 @@ function _chooseArr(i) {
     else if (i == 3) {
         $arr = _getArrayItems(level3, 1).concat([_setHide(5, 2)])
     }
-    console.log('>>>>>', $arr)
     return $arr
 
 }
@@ -301,24 +389,38 @@ function _out() {
 
 /*** 倒计时
  * i：结束时间
- * el：倒计时填充元素
  * fn：回调
  ***/
-function _time(i, el, fn) {
+function _time(i, fn) {
+
+    $('#timeBox').text(i)
 
     var timeFn = function () {
 
         i = i - 1
 
-        el.text(i)
+        $('#timeBox').text(i)
 
-        if (i == 0) {
+        if (i < 0) {
 
-            clearInterval(autoTime)
+            clearInterval(autoTime);
 
             fn && fn.call(this)
 
         }
+        if (isPractice) {
+            if (i <= 120) {
+                $('#tip').show()
+            }
+        } else {
+
+            if (i <= 300) {
+
+                $('#tip').attr('src', 'img/tip2.png').show()
+
+            }
+        }
+
 
     }
 
