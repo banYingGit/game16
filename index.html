@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>关联记忆</title>
+    <title>数字推理</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -12,14 +12,14 @@
     <meta name="format-detection" content="telephone=no"/>
     <meta name="msapplication-tap-highlight" content="no"/>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"/>
-    <title>配对记忆测验</title>
+    <title>数字推理测验</title>
     <link rel="stylesheet" href="css/style.css">
     <script src="javascript/jquery-2.1.3.js"></script>
 
 
 </head>
 <body>
-<div class="srceen" id="screen1">
+<div class="srceen" id="screen1"  style="display: block">
     <div class="main-box">
         <div class="img-box explain"><img src="img/text1.png"/></div>
         <div class="botton"><img src="img/btn1.png" id="goscreen2"/></div>
@@ -31,28 +31,28 @@
         <div class="botton"><img src="img/btn2.png" id="goscreen3"/></div>
     </div>
 </div>
-<div class="srceen" id="screen3" style="display: block">
+<div class="srceen" id="screen3">
     <div class="time-box"><span id="timeScr3">105</span>秒</div>
-    <div class="stop"><img src="img/stop.png"/></div>
+    <div class="stop" id="stop"><img src="img/stop.png"/></div>
     <img src="img/tip1.png" class="tip"/>
     <img src="img/text5.png" class="note"/>
     <div class="part-box">
         <ul id="partList">
-            <li><img src="img/num/num3.png"/></li>
+
         </ul>
         <div class="num-show" id="partLine">
 
         </div>
     </div>
-    <div class="botton">
-        <img src="img/btn5.png"/>
+    <div class="botton" id="partSure">
+        <img src="img/btn5.png" />
     </div>
 </div>
 
 <div class="srceen" id="screen4">
     <div class="main-box main-box-2">
         <div class="img-box explain explainT"><img src="img/text3.png"/></div>
-        <div class="botton"><img src="img/btn3.png"/></div>
+        <div class="botton"><img src="img/btn3.png" id="start"/></div>
     </div>
 </div>
 

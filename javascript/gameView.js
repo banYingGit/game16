@@ -2,36 +2,79 @@
  * Created by banYing on 2017/10/20 0020.
  */
 
-var level = 1,
+var level = 1, levelNum = 0, clickSum = 3, clickCur = 0, islevelFourOne = true,
     level1 = [
         [1, 2, 3, 3, 1, 2, 2, 3, 1],
         [3, 2, 1, 2, 1, 3, 1, 3, 2],
         [1, 3, 2, 2, 1, 3, 3, 2, 1],
         [2, 3, 1, 3, 1, 2, 1, 2, 3]
     ],
-    isOne = [0, 1, 1, 1, 0, 1, 1, 0, 1],
+
     level2 = [
         [1, 2, 4, 3, 3, 4, 2, 1, 2, 1, 3, 4, 4, 3, 1, 2],
         [3, 1, 4, 2, 4, 2, 3, 1, 2, 4, 1, 3, 1, 3, 2, 4],
         [2, 1, 3, 4, 4, 3, 1, 2, 1, 2, 4, 3, 3, 4, 2, 1],
         [4, 2, 3, 1, 3, 1, 4, 2, 1, 3, 2, 4, 2, 4, 1, 3]
     ],
-    isTwo1 = [1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1],
-    isTwo2 = [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1],
+
     level3 = [
         [1, 3, 4, 2, 5, 5, 2, 3, 1, 4, 3, 5, 2, 4, 1, 4, 1, 5, 3, 2, 2, 4, 1, 5, 3],
-        [5, 4, 1, 3, 2, 2, 1, 4, 3, 5, 4, 3, 2, 5, 1, 3, 2, 5, 1, 4, 1, 5, 3, 4, 2],
+        [5, 4, 1, 2, 3, 2, 1, 4, 3, 5, 4, 3, 2, 5, 1, 3, 2, 5, 1, 4, 1, 5, 3, 4, 2],
         [3, 5, 1, 4, 2, 2, 3, 5, 1, 4, 1, 4, 2, 5, 3, 4, 1, 3, 2, 5, 5, 2, 4, 3, 1],
         [2, 4, 3, 5, 1, 4, 1, 5, 2, 3, 1, 5, 2, 3, 4, 5, 3, 4, 1, 2, 3, 2, 1, 4, 5]
-    ],
-    isThree = [0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0];
-
-var autoTime;
+    ]
 
 
-_setPart()
+var autoTime, rightVal = '';
+
+
+_even()
+
+function _even() {
+
+    $('#setPartBtn').on('click', function () {
+        console.log('>>>>>>>>>>>')
+        _setPart()
+    })
+
+    $('#goscreen2').on('click', function () {
+
+        $('#screen2').show()
+
+    })
+    $('#goscreen3').on('click', function () {
+        _setPart()
+        $('#screen3').show()
+
+    })
+
+
+    $('#stop').on('click', function () {
+
+        $('#stopBox').show()
+        $('#partList').hide()
+        $('#screen3').hide()
+    })
+    $('#continue').on('click', function () {
+
+        $('#stopBox').hide()
+        $('#partList').show()
+        $('#screen3').show()
+    })
+
+    $('[data-role="out"]').click(function () {
+
+        _out()
+    })
+
+}
+
 //_setPart 设置游戏界面
 function _setPart() {
+
+    clickCur = 0;
+    levelNum = levelNum + 1
+    $('#partSure img').attr({'src': 'img/btn5.png', 'onclick': ''})
 
     $('#partList , #partLine').empty()
 
@@ -40,24 +83,31 @@ function _setPart() {
 
     var $chooseArr = _chooseArr(level),
         $arr = $chooseArr[0],
-        $isHide = $chooseArr[1]
-    console.log("???????", $chooseArr)
+        $isHide = $chooseArr[1];
+
     for (var i = 0; i < $arr.length; i++) {
 
         if ($isHide[i] == 0) {
 
-            $('#partList').append('<li data-role="' + $arr[i] + '"><img src="img/block.png"></li>')
+            $('#partList').append('<li onclick="_checkLeft(event,' + $arr[i] + ')" ><img src="img/block.png"  data-role="' + $arr[i] + '"></li>')
 
         } else {
 
-            $('#partList').append('<li data-role="' + $arr[i] + '"><img src="img/num/num' + $arr[i] + '.png"></li>')
+            $('#partList').append('<li><img src="img/num/num' + $arr[i] + '.png" data-role="' + $arr[i] + '"></li>')
 
         }
 
     }
 
 
-    var screenH = $(document).height()
+    for (var n = 1; n <= level + 2; n++) {
+
+        $('#partLine').append('<img src="img/nums/num' + n + '.png" onclick="_getRight(event,' + n + ')"  data-role="' + n + '">')
+
+    }
+
+
+    var screenH = $(document).height();
 
     $('.part1').css({'width': screenH * 0.4, 'height': screenH * 0.4});
 
@@ -67,53 +117,161 @@ function _setPart() {
 
 
 }
+
+function _getRight(e, val) {
+    rightVal = val
+}
+
+function _checkLeft(e, val) {
+
+    if (!rightVal) {
+        $(e.target).children('img').attr('src', 'img/block.png')
+        $(e.target).removeClass('result1')
+        var $imgSrc = $(e.target).children('img').attr('src')
+        if (!!$imgSrc) {
+            if ($imgSrc.indexOf("block") != -1) {
+                clickCur = clickCur - 1
+                $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
+            }
+        }
+        console.log('clickCur', clickCur)
+        return
+    } else {
+
+    }
+
+
+    if (rightVal == val) {
+        $(e.target).parent('li').addClass('result1')
+        // console.log('答对了')
+        $imgSrc = !!$(e.target).attr('src') ? $(e.target).attr('src') : $(e.target).children('img').attr('src')
+        if ($imgSrc.indexOf("block") != -1) {
+
+            clickCur = clickCur + 1
+            $('#partSure img').attr({'src': 'img/btn5.png', 'id': ''})
+        }
+
+
+    } else {
+        // console.log('答错了')
+        $(e.target).parent('li').addClass('result2')
+        setTimeout(function () {
+            $(e.target).parent('li').removeClass('result2')
+            $(e.target).attr('src', 'img/block.png')
+        }, 750)
+    }
+    $(e.target).attr('src', 'img/nums/num' + rightVal + '.png')
+    rightVal = ''
+    console.log('clickCur,clickSum', clickCur, clickSum)
+    if (clickCur == clickSum) {
+        setTimeout(function () {
+            if (levelNum < 2) {
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            } else if (levelNum == 2) {
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_goTest()'})
+            }
+            else if (levelNum < 4 && levelNum > 2) {
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            } else if (levelNum == 4) {
+                islevelFourOne = false;
+                clickSum = 8
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            }
+            else if (levelNum < 6 && levelNum > 4) {
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            } else if (levelNum == 6) {
+                level = 3
+                clickSum = 10
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            }
+            else if (levelNum < 8 && levelNum > 6) {
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_setPart()'})
+            } else if (levelNum == 8) {
+
+                $('#partSure img').attr({'src': 'img/btn5s.png', 'onclick': '_over()'})
+            }
+
+        }, 750)
+    }
+}
+
+function _goTest() {
+    $('#screen3').hide()
+    $('#screen4').show()
+
+    $('#start').on('click', function () {
+        level = 2
+        clickSum = 4
+        _setPart()
+        $('#screen3').show()
+        $('#screen4').hide()
+
+    })
+}
+
 /**_chooseArr 选择数组
  * i : 等级
  * **/
 function _chooseArr(i) {
 
     var $arr = [];
-
-
     if (i == 1) {
-        $arr = _getArrayItems(level1, 1).concat([isOne])
+        $arr = _getArrayItems(level1, 1).concat([_setHide(3, 1)])
     } else if (i == 2) {
-        $arr = _getArrayItems(level2, 1).concat([isTwo1])
-    } else if (i == 3) {
-        $arr = _getArrayItems(level2, 1).concat([isTwo2])
+        if (islevelFourOne) {
+            $arr = _getArrayItems(level2, 1).concat([_setHide(4, 1)])
+        } else {
+            $arr = _getArrayItems(level2, 1).concat([_setHide(4, 2)])
+        }
+
     }
-    else if (i == 4) {
-        $arr = _getArrayItems(level3, 1).concat([isThree])
+    else if (i == 3) {
+        $arr = _getArrayItems(level3, 1).concat([_setHide(5, 2)])
     }
     console.log('>>>>>', $arr)
     return $arr
 
 }
 
-function _setHide(i) {
-
-    var aArr = [1, 2, 3], bArr = [1, 2, 3, 4], cArr = [1, 2, 3, 4, 5]
-
-    if (i == 1) {
-
-    } else if (i == 2) {
-
-
-    } else if (i == 3) {
-
-
+/***
+ * _setHide 设置隐藏区块
+ * x:目标数
+ * y:隐藏个数
+ * 例如3选1  x:3 y:1
+ * **/
+function _setHide(x, y) {
+    var $arr = []
+    for (var j = 0; j < x; j++) {
+        $arr[j] = j;
     }
-    else if (i == 4) {
-
-
+    // console.log(a)
+    var $c = 0, $d = 0, $e = 0;
+    var One = []
+    for (var j = 0; j < (x * x); j++) {
+        One[j] = 1;
     }
-
+    // console.log(One)
+    var sum = x * (x - 1) + 1
+    for (var i = 0; i < sum; i = i + x) {
+        // console.log("i=",i)
+        var $b = _getArrayItems($arr, y)
+        $d = i + $b[0]
+        if (y == 2) {
+            $e = i + $b[1]
+            One.splice($e, 1, 0)
+        }
+        //  console.log("b=",b)
+        // console.log("d=",d,"e=",e)
+        One.splice($d, 1, 0)
+    }
+    return One
 }
-
 
 //游戏结束
 function _over() {
 
+    $('#screen3').hide()
+    $('#over').show()
     // $('#score').text(correctNum * 100)
 
     /* ajax 请求接口路径，返回json 数据
